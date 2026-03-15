@@ -1,0 +1,12 @@
+Feature,Importance
+BMI,0.9995167
+Claim Reason_Travel,0.00013703699
+Claim Reason_Phone,0.00011904568
+Premium/Amount Ratio,0.00011877472
+Claim Amount,0.0001083822
+Category Premium,0.0
+Claim Reason_Other,0.0
+Data confidentiality_Low,0.0
+Data confidentiality_Medium,0.0
+Data confidentiality_Very low,0.0
+Claim Request output_Yes,0.0

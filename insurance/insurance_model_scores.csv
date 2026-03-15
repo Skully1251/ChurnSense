@@ -1,0 +1,4 @@
+Model,Accuracy,ROC-AUC,CV ROC-AUC
+Logistic Regression,100.00%,1.0000,1.0000 +/- 0.0000
+Random Forest,100.00%,1.0000,1.0000 +/- 0.0000
+XGBoost,100.00%,1.0000,1.0000 +/- 0.0000
