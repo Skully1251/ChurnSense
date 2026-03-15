@@ -1,0 +1,30 @@
+Feature,Importance
+Tenure,0.13062261
+MaritalStatus_Single,0.06277533
+MaritalStatus_Married,0.05626893
+Complain,0.053829737
+PreferredPaymentMode_E wallet,0.04950425
+CouponUsed,0.04824398
+NumberOfDeviceRegistered,0.04813822
+PreferedOrderCat_Laptop & Accessory,0.04356836
+NumberOfAddress,0.03930176
+PreferedOrderCat_Grocery,0.034801252
+PreferedOrderCat_Mobile Phone,0.033835813
+DaySinceLastOrder,0.03378906
+SatisfactionScore,0.032746077
+CityTier,0.031436093
+OrderCount,0.029285511
+PreferedOrderCat_Mobile,0.028862413
+PreferedOrderCat_Others,0.026012443
+Gender_Male,0.025289673
+PreferredPaymentMode_Cash on Delivery,0.02449843
+CashbackAmount,0.023938432
+PreferredPaymentMode_COD,0.01969634
+OrderAmountHikeFromlastYear,0.018431757
+HourSpendOnApp,0.017956655
+WarehouseToHome,0.01658396
+PreferredPaymentMode_Credit Card,0.016398057
+PreferredPaymentMode_Debit Card,0.0154663585
+PreferredPaymentMode_UPI,0.01433134
+PreferredLoginDevice_Phone,0.013363472
+PreferredLoginDevice_Mobile Phone,0.011023718
