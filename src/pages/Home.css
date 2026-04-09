@@ -11,8 +11,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   padding: 15px 40px;
   z-index: 100;
@@ -28,11 +28,11 @@
 
 /* Glassmorphism on scroll */
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(11, 15, 26, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
-  border-bottom-color: rgba(229, 231, 235, 0.5);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  border-bottom-color: rgba(30, 41, 59, 0.5);
 }
 
 /* Hide on scroll down */
@@ -69,7 +69,15 @@
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 30px;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: end;
 }
 
 /* Nav link with animated underline */
@@ -129,8 +137,8 @@
 }
 
 .nav-signup-btn:hover {
-  background: #06312e;
-  box-shadow: 0 4px 15px rgba(7, 58, 54, 0.3);
+  background: #0f9a8e;
+  box-shadow: 0 4px 15px rgba(20, 184, 166, 0.35);
 }
 
 .nav-settings-btn {
@@ -169,51 +177,79 @@ section {
 
 /* ============ Hero Section ============ */
 .hero-section {
-  padding-top: 120px;
+  position: relative;
+  min-height: 100vh;
+  padding-top: 100px;
   padding-bottom: 80px;
   overflow: hidden;
-  background: var(--bg-panel);
-}
-
-.hero-content {
+  background: #000;
   display: flex;
   align-items: center;
-  gap: 50px;
-  max-width: 1200px;
-}
-
-.hero-left {
-  flex: 1;
-  text-align: left;
-}
-
-.hero-left h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  letter-spacing: -1px;
-  line-height: 1.15;
-  color: var(--text-primary);
-}
-
-.hero-left p {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin-bottom: 35px;
-  max-width: 480px;
-  line-height: 1.7;
-}
-
-.hero-right {
-  flex: 1.1;
-  display: flex;
   justify-content: center;
 }
 
-.hero-dashboard-img {
+.hero-aurora-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  color: white;
+}
+
+.hero-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.hero-tagline {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 550px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 100%;
-  max-width: 560px;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0; /* starts hidden — GSAP fades it in */
+}
+
+/* Dim overlay on video */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  opacity: 0; /* starts hidden — GSAP fades it in */
 }
 
 /* ============ Get Started Button ============ */
@@ -343,7 +379,7 @@ section {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: #f0fdfa;
+  background: rgba(20, 184, 166, 0.12);
   color: var(--accent-primary);
   display: flex;
   align-items: center;
@@ -430,7 +466,7 @@ section {
 
 /* ============ Contact Section ============ */ 
 .contact-section {
-  background: #eef2f6;
+  background: rgba(11, 15, 26, 0.6);
   padding: 100px 20px;
 } 
 
@@ -607,19 +643,8 @@ section {
 
 /* ============ Responsive ============ */
 @media (max-width: 992px) {
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  .hero-left {
-    text-align: center;
-  }
-  .hero-left p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .hero-left h1 {
-    font-size: 2.8rem;
+  .hero-title {
+    font-size: 3.5rem;
   }
   .trust-cards,
   .process-cards {
@@ -638,10 +663,12 @@ section {
 }
 
 @media (max-width: 768px) {
-  .hero-left h1 { font-size: 2.2rem; }
-  .navbar { flex-direction: column; gap: 10px; padding: 15px; position: relative; }
+  .hero-title { font-size: 2.8rem; }
+  .hero-tagline { font-size: 1.05rem; }
+  .navbar { grid-template-columns: 1fr; gap: 10px; padding: 15px; position: relative; }
   .navbar.nav-hidden { transform: none; }
   .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
+  .nav-auth { justify-self: center; }
   .get-started-btn {
     width: 100%;
     text-align: center;

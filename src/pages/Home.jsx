@@ -4,8 +4,10 @@ import { useAuth } from '../context/AuthContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Settings, Zap, Target, BarChart3, Shield, Link2, Brain, Rocket, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import Aurora from '../components/backgrounds/Aurora';
 import dashboardImg from '../assets/dashboard-mockup.png';
 import './Home.css';
+import bgVideo from "../assets/heroSectionbg.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,17 +92,18 @@ function Home() {
   /* ---- GSAP entrance + ScrollTrigger animations ---- */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* Hero entrance */
+      /* Hero entrance — video + content fade in together */
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       heroTl
-        .from('.hero-left h1', { opacity: 0, y: 50, duration: 0.8 })
-        .from('.hero-left p', { opacity: 0, y: 30, duration: 0.7 }, '-=0.4')
+        .fromTo('.hero-video', { opacity: 0 }, { opacity: 1, duration: 1.5 })
+        .fromTo('.overlay', { opacity: 0 }, { opacity: 1, duration: 1.5 }, 0)
+        .from('.hero-title', { opacity: 0, y: 50, duration: 0.9 }, 0.2)
+        .from('.hero-tagline', { opacity: 0, y: 30, duration: 0.8 }, 0.5)
         .fromTo(getStartedBtnRef.current,
           { opacity: 0, y: 30, scale: 0.9 },
           { opacity: 1, y: 0, scale: 1, duration: 0.8 },
-          '-=0.3'
-        )
-        .from('.hero-dashboard-img', { opacity: 0, x: 80, duration: 1 }, '-=0.6');
+          0.8
+        );
 
       /* Trust section */
       gsap.from('.trust-section .section-content h2', {
@@ -157,7 +160,7 @@ function Home() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`} ref={navRef}>
         <div className="nav-logo">
           <Zap size={20} className="nav-logo-icon" />
-          <span>ChurnPredict</span>
+          <span>ChurnSense</span>
         </div>
         <ul className="nav-links">
           {sections.map(section => (
@@ -168,60 +171,65 @@ function Home() {
               </button>
             </li>
           ))}
-
-          {/* Auth buttons */}
+        </ul>
+        <div className="nav-auth">
           {user ? (
-            <li>
-              <button className="nav-btn nav-auth-btn nav-settings-btn" onClick={() => navigate('/settings')}>
-                <Settings size={16} />
-                <span>Settings</span>
-              </button>
-            </li>
+            <button className="nav-btn nav-auth-btn nav-settings-btn" onClick={() => navigate('/settings')}>
+              <Settings size={16} />
+              <span>Settings</span>
+            </button>
           ) : (
             <>
-              <li>
-                <button className="nav-btn nav-auth-btn nav-login-text-btn" onClick={() => navigate('/login')}>
-                  Login
-                  <span className="nav-btn-underline"></span>
-                </button>
-              </li>
-              <li>
-                <button className="nav-btn nav-auth-btn nav-signup-btn" onClick={() => navigate('/signup')}>
-                  Sign Up
-                </button>
-              </li>
+              <button className="nav-btn nav-auth-btn nav-login-text-btn" onClick={() => navigate('/login')}>
+                Login
+                <span className="nav-btn-underline"></span>
+              </button>
+              <button className="nav-btn nav-auth-btn nav-signup-btn" onClick={() => navigate('/signup')}>
+                Sign Up
+              </button>
             </>
           )}
-        </ul>
+        </div>
       </nav>
 
       {/* Hero Section */}
       <section id="home" className="hero-section" ref={heroRef}>
-        <div className="hero-content container">
-          <div className="hero-left">
-            <h1>Predict and Prevent Customer <span className="text-accent">Churn</span> with AI</h1>
-            <p>Unlock powerful insights and proactive retention strategies to keep your customers engaged and growing. Start knowing.</p>
-            <div
-              className="get-started-magnetic-area"
-              onMouseMove={handleBtnAreaMove}
-              onMouseLeave={handleBtnAreaLeave}
+        {/* <div className="hero-aurora-bg">
+          <Aurora
+            colorStops={["#0f766e", "#14b8a6", "#0ea5e9"]}
+            amplitude={1.2}
+            blend={0.6}
+            speed={0.8}
+          />
+        </div> */}
+
+        <video autoPlay loop muted playsInline className="hero-video">
+          <source src={bgVideo} type="video/mp4" />
+        </video>
+        
+        <div className="overlay"></div>
+
+        <div className="hero-content container hero-centered">
+          <h1 className="hero-title">Churn<span className="text-accent">Sense</span></h1>
+          <p className="hero-tagline">Predict Churn before it happens — across every industry.</p>
+          <div
+            className="get-started-magnetic-area"
+            onMouseMove={handleBtnAreaMove}
+            onMouseLeave={handleBtnAreaLeave}
+          >
+            <button
+              ref={getStartedBtnRef}
+              className="get-started-btn"
+              onMouseMove={handleMouseMove}
+              onClick={handleGetStarted}
             >
-              <button
-                ref={getStartedBtnRef}
-                className="get-started-btn"
-                onMouseMove={handleMouseMove}
-                onClick={handleGetStarted}
-              >
-                <span>Get Started</span>
-                <ArrowRight size={18} className="btn-arrow" />
-              </button>
-            </div>
-          </div>
-          <div className="hero-right">
-            <img src={dashboardImg} alt="ChurnPredict AI Dashboard" className="hero-dashboard-img" />
+              <span>Get Started</span>
+              <ArrowRight size={18} className="btn-arrow" />
+            </button>
           </div>
         </div>
       </section>
+
 
       {/* Why Businesses Trust Us */}
       <section id="about-us" className="trust-section" ref={trustRef}>
@@ -254,6 +262,7 @@ function Home() {
         </div>
       </section>
 
+
       {/* Our Simple Process */}
       <section id="process" className="process-section" ref={processRef}>
         <div className="section-content container">
@@ -284,6 +293,7 @@ function Home() {
           </div>
         </div>
       </section>
+
 
       {/* Contact / CTA Section */}
       <section id="contact-us" className="contact-section" ref={contactRef}>

@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Colors — Light Theme */
-  --bg-primary: #f5f7fa;
-  --bg-secondary: #ffffff;
-  --bg-panel: #ffffff;
-  --bg-hover: #f0f2f5;
+  /* Colors — Dark Theme (Default) */
+  --bg-primary: #0b0f1a;
+  --bg-secondary: #111827;
+  --bg-panel: #111827;
+  --bg-hover: #1e293b;
 
-  --text-primary: #1a1a2e;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-  --accent-primary: #0f766e;      
-  --accent-secondary: #14b8a6;    
+  --accent-primary: #14b8a6;      
+  --accent-secondary: #2dd4bf;    
   --accent-warning: #f59e0b;      
   --accent-danger: #ef4444;       
   
-  --border-color: #e5e7eb;
-  --border-hover: #d1d5db;
+  --border-color: #1e293b;
+  --border-hover: #334155;
 
   /* Typography */
   --font-heading: 'Outfit', sans-serif;
