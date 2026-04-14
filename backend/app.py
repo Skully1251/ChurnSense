@@ -11,9 +11,13 @@ import numpy as np
 import joblib
 import os
 import traceback
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Allow React frontend to call this API
+cors_origin = os.getenv("ALLOWED_CORS_ORIGIN", "*")
+CORS(app, resources={r"/*": {"origins": cors_origin}})  # Allow React frontend to call this API
 
 # ── Model file paths ──────────────────────────────────────
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -334,5 +338,7 @@ def predict(service):
 
 
 if __name__ == '__main__':
-    print("ChurnSense backend starting on http://localhost:5000")
-    app.run(debug=True, port=5000)
+    port = int(os.getenv("PORT", 5000))
+    debug_mode = os.getenv("FLASK_ENV") == "development"
+    print(f"ChurnSense backend starting on http://localhost:{port}")
+    app.run(debug=debug_mode, port=port)
