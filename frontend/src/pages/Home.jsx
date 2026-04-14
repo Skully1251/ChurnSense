@@ -7,7 +7,7 @@ import { Settings, Zap, Target, BarChart3, Shield, Link2, Brain, Rocket, Mail, P
 import Aurora from '../components/backgrounds/Aurora';
 import dashboardImg from '../assets/dashboard-mockup.png';
 import './Home.css';
-import bgVideo from "../assets/heroSectionbg.mp4";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,11 +92,10 @@ function Home() {
   /* ---- GSAP entrance + ScrollTrigger animations ---- */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* Hero entrance — video + content fade in together */
+      /* Hero entrance — aurora + content fade in together */
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       heroTl
-        .fromTo('.hero-video', { opacity: 0 }, { opacity: 1, duration: 1.5 })
-        .fromTo('.overlay', { opacity: 0 }, { opacity: 1, duration: 1.5 }, 0)
+        .fromTo('.hero-aurora-bg', { opacity: 0 }, { opacity: 0.55, duration: 1.5 })
         .from('.hero-title', { opacity: 0, y: 50, duration: 0.9 }, 0.2)
         .from('.hero-tagline', { opacity: 0, y: 30, duration: 0.8 }, 0.5)
         .fromTo(getStartedBtnRef.current,
@@ -194,20 +193,14 @@ function Home() {
 
       {/* Hero Section */}
       <section id="home" className="hero-section" ref={heroRef}>
-        {/* <div className="hero-aurora-bg">
+        <div className="hero-aurora-bg">
           <Aurora
             colorStops={["#0f766e", "#14b8a6", "#0ea5e9"]}
             amplitude={1.2}
             blend={0.6}
             speed={0.8}
           />
-        </div> */}
-
-        <video autoPlay loop muted playsInline className="hero-video">
-          <source src={bgVideo} type="video/mp4" />
-        </video>
-        
-        <div className="overlay"></div>
+        </div>
 
         <div className="hero-content container hero-centered">
           <h1 className="hero-title">Churn<span className="text-accent">Sense</span></h1>
@@ -308,7 +301,7 @@ function Home() {
               </div>
               <div className="contact-info-item">
                 <div className="contact-info-icon"><Phone size={18} /></div>
-                <span>+91 9266148718</span>
+                <span>+91 9876543210</span>
               </div>
               <div className="contact-info-item">
                 <div className="contact-info-icon"><MapPin size={18} /></div>

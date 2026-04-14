@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { SettingsIcon, User, Mail, LogOut, Save, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { SettingsIcon, User, Mail, LogOut, Save, ArrowLeft, CheckCircle2, Chrome } from 'lucide-react';
 import gsap from 'gsap';
 import './Settings.css';
 
@@ -10,9 +10,11 @@ function Settings() {
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
 
-  const [name, setName] = useState(user?.name || '');
+  const [name, setName] = useState(user?.displayName || '');
   const [email, setEmail] = useState(user?.email || '');
   const [saved, setSaved] = useState(false);
+
+  const isGoogleUser = user?.provider === 'google';
 
   useEffect(() => {
     if (!user) return;
@@ -39,17 +41,19 @@ function Settings() {
     return <Navigate to="/login" replace />;
   }
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    updateUser({ name, email });
+    await updateUser({ name, email });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
+
+  const displayInitial = (user.displayName || user.email || '?').charAt(0).toUpperCase();
 
   return (
     <div className="auth-wrapper" ref={wrapperRef}>
@@ -71,11 +75,21 @@ function Settings() {
         {/* Avatar */}
         <div className="settings-avatar">
           <div className="avatar-circle">
-            {user.name.charAt(0).toUpperCase()}
+            {user.photoURL ? (
+              <img src={user.photoURL} alt="Profile" className="avatar-img" referrerPolicy="no-referrer" />
+            ) : (
+              displayInitial
+            )}
           </div>
           <div className="avatar-info">
-            <strong>{user.name}</strong>
+            <strong>{user.displayName || 'User'}</strong>
             <span>{user.email}</span>
+            {isGoogleUser && (
+              <span className="provider-badge">
+                <Chrome size={12} />
+                Google Account
+              </span>
+            )}
           </div>
         </div>
 
@@ -104,12 +118,19 @@ function Settings() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="auth-input"
                 required
+                disabled={isGoogleUser}
+                title={isGoogleUser ? 'Email is managed by Google' : ''}
               />
             </div>
+            {isGoogleUser && (
+              <span className="auth-input-hint">Email is managed by your Google account</span>
+            )}
           </div>
 
           <div className="settings-member-since">
-            Member since {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            Member since {user.createdAt?.toDate
+              ? new Date(user.createdAt.toDate()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+              : 'recently'}
           </div>
 
           <button type="submit" className="auth-submit-btn">
